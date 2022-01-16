@@ -1,0 +1,28 @@
+#include "Adafruit_NeoPixel.h"
+
+#include "led.h"
+#ifdef __AVR__
+  #include <avr/power.h>
+#endif
+
+
+#define LING_LED_PIN            4
+#define BAR_LED_PIN             5
+
+// How many NeoPixels are attached to the Arduino?
+#define LING_LED_NUMBER      8
+#define BAR_LED_NUMBER      8
+// When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
+// Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
+// example for more information on possible values.
+
+// define led obj
+Adafruit_NeoPixel ring_led = Adafruit_NeoPixel(LING_LED_NUMBER, LING_LED_PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel bar_led = Adafruit_NeoPixel(BAR_LED_NUMBER   , BAR_LED_PIN, NEO_GRB + NEO_KHZ800);
+
+int delayval = 500; // delay for half a second
+
+  // This is for Trinket 5V 16MHz, you can remove these three lines if you are not using a Trinket
+#if defined (__AVR_ATtiny85__)
+  if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
+#endif
