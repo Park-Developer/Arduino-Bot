@@ -1,34 +1,45 @@
 #include "led.h"
+#include "cmd_receiver.h"
 
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(LING_LED_NUMBER, LING_LED_PIN , NEO_GRB + NEO_KHZ800);
+// LED objs Setting
+Adafruit_NeoPixel ring_led = Adafruit_NeoPixel(RING_LED_NUMBER, RING_LED_PIN , NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel bar_led = Adafruit_NeoPixel(BAR_LED_NUMBER, BAR_LED_PIN , NEO_GRB + NEO_KHZ800);
 
-//int delayval = 500; // delay for half a second
+
+int incomingByte = 0;    // for incoming serial data
 
 void setup() {
+
+  // [1] System Setting  
+  bool debug_mode=true; // user setting mode
+
+
   // This is for Trinket 5V 16MHz, you can remove these three lines if you are not using a Trinket
-#if defined (__AVR_ATtiny85__)
-  if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
-#endif
+  #if defined (__AVR_ATtiny85__)
+    if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
+  #endif
   // End of trinket special code
 
-  pixels.begin(); // This initializes the NeoPixel library.
+  // [2] LED Setting
+  ring_led.begin(); // This initializes the NeoPixel library.
+  bar_led.begin(); // This initializes the NeoPixel library.
+  // [3] Serial Setting
+  Serial.begin(9600); 
+
+
+  // LED Initial Setting
+  initial_display(ring_led, bar_led );
+
 }
 
 void loop() {
-
-  // For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
-
-  //initial_display(pixels,4, pixels.Color(0,150,0));
-  /*
-  for(int i=0;i<NUMPIXELS;i++){
-
-    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
-    pixels.setPixelColor(i, pixels.Color(0,150,0)); // Moderately bright green color.
-
-    pixels.show(); // This sends the updated pixel color to the hardware.
-
-    delay(delayval); // Delay for a period of time (in milliseconds).
-
+  // send data only when you receive data:
+  if (Serial.available() > 0) {
+  
+    // read the incoming byte:
+    incomingByte = Serial.read();
+  
+    // say what you got:
+    Serial.print((char)incomingByte);
   }
-  */
 }

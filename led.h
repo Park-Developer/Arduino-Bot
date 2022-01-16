@@ -5,11 +5,11 @@
 #include "Adafruit_NeoPixel.h"
 
   #define ADAFAULT_NEOPIXEL_H
-  #define LING_LED_PIN            4
+  #define RING_LED_PIN            4
   #define BAR_LED_PIN             5
 
   // How many NeoPixels are attached to the Arduino?
-  #define LING_LED_NUMBER      8
+  #define RING_LED_NUMBER      8
   #define BAR_LED_NUMBER      8
   // When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
   // Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
@@ -22,7 +22,8 @@
     #include <avr/power.h>
   #endif
 
-void initial_display(Adafruit_NeoPixel led_obj,int led_num,int rgb_array);
+void blink_led(Adafruit_NeoPixel led_obj,int led_num,int rgb_array);
+void initial_display(Adafruit_NeoPixel led_obj1,Adafruit_NeoPixel led_obj2,int loopnum=3);
 #endif
 
 
