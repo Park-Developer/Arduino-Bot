@@ -1,5 +1,17 @@
 #include "led.h"
+/*
+void addd(Adafruit_NeoPixel *led_obj)
+{
+  Serial.print("addd");
 
+  led_obj->setPixelColor(*led_num,(*led_obj).Color(224,0,0));
+
+    led_obj->show(); 
+    delay(DELAY_TERM); 
+
+
+}
+*/
 void blink_led(Adafruit_NeoPixel led_obj,int led_num,int rgb_array){
   //ring_led.setPixelColor(3, ring_led.Color(0,150,0)); // Moderately bright green color.
 
@@ -12,12 +24,14 @@ void blink_led(Adafruit_NeoPixel led_obj,int led_num,int rgb_array){
     delay(DELAY_TERM); // Delay for a period of time (in milliseconds).
 }
 
-void initial_display(Adafruit_NeoPixel led_obj1,Adafruit_NeoPixel led_obj2,int loopnum=3){
+void initial_display(Adafruit_NeoPixel *led_obj1,Adafruit_NeoPixel *led_obj2,int loopnum=3){
+  const int LED_BIT=8; // 8 Bit LED
   int mod;
   int r;
   int g;
   int b;
   
+        Serial.print("func3"+String(LED_BIT));
   for(int i=0;i<loopnum;i++){
     // LED color Setting
     mod=i%3;
@@ -43,24 +57,29 @@ void initial_display(Adafruit_NeoPixel led_obj1,Adafruit_NeoPixel led_obj2,int l
       default:
         break;
     }
-    
-    // LED #1 Setting
-    led_obj1.setPixelColor(1,led_obj1.Color(r,g,b));
-    led_obj1.show(); 
+  
+    for(int j=0;j<LED_BIT;j++){
+      // LED #1 Setting
+      led_obj1->setPixelColor(j,led_obj1->Color(r,g,b));
+      
+      // LED #2 Setting
+      led_obj2->setPixelColor(j,led_obj2->Color(r,g,b));
+    }
 
-    // LED #2 Setting
-    led_obj2.setPixelColor(1,led_obj2.Color(r,g,b));
-    led_obj2.show(); 
+    led_obj1->show(); 
+    led_obj2->show(); 
 
     delay(DELAY_TERM); 
   }
 
-      // LED #1 Setting
-    led_obj1.setPixelColor(1,led_obj1.Color(0,0,0));
-    led_obj1.show(); 
+  for(int j=0;j<LED_BIT;j++){
+    // LED #1 Setting
+    led_obj1->setPixelColor(j,led_obj1->Color(0,0,0));
 
     // LED #2 Setting
-    led_obj2.setPixelColor(1,led_obj2.Color(0,0,0));
-    led_obj2.show(); 
+    led_obj2->setPixelColor(j,led_obj2->Color(0,0,0));
+  }
+  led_obj1->show(); 
+  led_obj2->show(); 
 
 }

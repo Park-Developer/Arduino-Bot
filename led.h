@@ -23,7 +23,8 @@
   #endif
 
 void blink_led(Adafruit_NeoPixel led_obj,int led_num,int rgb_array);
-void initial_display(Adafruit_NeoPixel led_obj1,Adafruit_NeoPixel led_obj2,int loopnum=3);
+void initial_display(Adafruit_NeoPixel *led_obj1,Adafruit_NeoPixel *led_obj2,int loopnum=3);
+//void addd(Adafruit_NeoPixel *led_obj);
 #endif
 
 
